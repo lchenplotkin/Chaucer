@@ -1,0 +1,17 @@
+Words: boures and toures, 13
+['Blessynge halles, chambres, kichenes, boures,', 'Citees, burghes, castels, hye toures,']
+Words: dayeryes and fayeryes, 15
+['Thropes, bernes, shipnes, dayeryes --', 'This maketh that ther ben no fayeryes.']
+Words: desiren and iren, 49
+['What thyng is it that wommen moost desiren.', 'Be war, and keep thy nekke-boon from iren!']
+Words: siketh and liketh, 57
+['Wo was this knyght, and sorwefully he siketh;', 'But what! he may nat do al as hym liketh.']
+Words: esed and yplesed, 73
+['Somme seyde that oure hertes been moost esed', 'Whan that we ben yflatered and yplesed.']
+Words: heres and eres, 97
+['Seyde myda hadde, under his longe heres,', 'Growynge upon his heed two asses eres,']
+Words: dampnacioun and nacioun, 209
+['My love? quod he, nay, my dampnacioun!', 'Allas! that any of my nacioun']
+Words: liketh and siketh, 369
+['Now chese yourselven, wheither that yow liketh.', 'This knyght avyseth hym and sore siketh,']
+number of lines: 405, number of masculine rhymes: 195, number of feminine rhymes: 8
