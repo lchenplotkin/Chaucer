@@ -1,4 +1,4 @@
-# Middle English Rhyme Detector
+# Detecting Feminine Rhyme in Middle English Text
 
 ## Overview
 
