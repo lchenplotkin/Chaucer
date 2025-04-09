@@ -1,17 +1,51 @@
-Words: boures and toures, 13
-['Blessynge halles, chambres, kichenes, boures,', 'Citees, burghes, castels, hye toures,']
-Words: dayeryes and fayeryes, 15
-['Thropes, bernes, shipnes, dayeryes --', 'This maketh that ther ben no fayeryes.']
-Words: desiren and iren, 49
-['What thyng is it that wommen moost desiren.', 'Be war, and keep thy nekke-boon from iren!']
-Words: siketh and liketh, 57
-['Wo was this knyght, and sorwefully he siketh;', 'But what! he may nat do al as hym liketh.']
-Words: esed and yplesed, 73
-['Somme seyde that oure hertes been moost esed', 'Whan that we ben yflatered and yplesed.']
-Words: heres and eres, 97
-['Seyde myda hadde, under his longe heres,', 'Growynge upon his heed two asses eres,']
-Words: dampnacioun and nacioun, 209
-['My love? quod he, nay, my dampnacioun!', 'Allas! that any of my nacioun']
-Words: liketh and siketh, 369
-['Now chese yourselven, wheither that yow liketh.', 'This knyght avyseth hym and sore siketh,']
-number of lines: 405, number of masculine rhymes: 195, number of feminine rhymes: 8
+Words: tavernes and gyternes, 3
+['As riot, hasard, stywes, and tavernes,', 'Where as with harpes, lutes, and gyternes,']
+Words: tombesteres and frutesteres, 15
+['And right anon thanne comen tombesteres', 'Fetys and smale, and yonge frutesteres,']
+Words: wafereres and officeres, 17
+['Syngeres with harpes, baudes, wafereres,', 'Whiche been the verray develes officeres']
+Words: giltelees and doutelees, 29
+['To sleen the baptist john, ful giltelees.', 'senec seith a good word doutelees;']
+Words: delices and vices, 85
+['But, certes, he that haunteth swiche delices', 'Is deed, whil that he lyveth in tho vices.']
+Words: dronkenesse and sobrenesse, 119
+['Bledynge ay at his nose in dronkenesse.', 'A capitayn sholde lyve in sobrenesse.']
+Words: lesynges and forswerynges, 129
+['Hasard is verray mooder of lesynges,', 'And of deceite, and cursed forswerynges,']
+Words: hasardours and embassadours, 151
+['Yow for to allie unto none hasardours.', 'Sendeth othere wise embassadours;']
+Words: stondeth and understondeth, 183
+['I seye that, as by ordre, thus it stondeth;', 'This knoweth, that his heestes understondeth,']
+Words: nayles and hayles, 189
+['By goddes precious herte, and by his nayles,', 'And by the blood of crist that is in hayles,']
+Words: necessarie and adversarie, 219
+['Me thynketh that it were necessarie', 'For to be war of swich an adversarie.']
+Words: bones and ones, 233
+['I make avow to goddes digne bones!', 'Herkneth, felawes, we thre been al ones;']
+Words: oother and brother, 235
+['Lat ech of us holde up his hand til oother,', 'And ech of us bicomen otheres brother.']
+Words: oother and brother, 241
+['To lyve and dyen ech of hem for oother,', 'As though he were his owene ybore brother.']
+Words: age and visage, 257
+['Why lyvestow so longe in so greet age?', 'this olde man gan looke in his visage,']
+Words: village and age, 261
+['Neither in citee ne in no village,', 'That wolde chaunge his youthe for myn age;']
+Words: tarie and carie, 337
+['This tresor wel; and if he wol nat tarie,', 'Whan it is nyght, we wol this tresor carie,']
+Words: oother and brother, 345
+['That oon of hem spak thus unto that oother --', 'Thou knowest wel tho art my sworen brother;']
+Words: anon and agon, 347
+['Thy profit wol I telle thee anon.', 'Thou woost wel that oure felawe is agon.']
+Words: tarie and pothecarie, 389
+['And forth he gooth, no lenger wolde he tarie,', 'Into the toun, unto a pothecarie,']
+Words: merie and berie, 421
+['Now lat us sitte and drynke, and make us merie,', 'And afterward we wol his body berie.']
+Words: cursednesse and wikkednesse, 433
+['o cursed synne of alle cursednesse!', 'O traytours homycide, o wikkednesse!']
+Words: sterlynges and rynges, 445
+['So that ye offre nobles or sterlynges,', 'Or elles silver broches, spoones, rynges.']
+Words: adoun and pardoun, 463
+['Com forth anon, and kneleth heere adoun,', 'And mekely receyveth my pardoun;']
+Words: alle and yfalle, 475
+['Looke which a seuretee is it to yow alle', 'That I am in youre felaweshipe yfalle,']
+number of lines: 505, number of masculine rhymes: 228, number of feminine rhymes: 25
