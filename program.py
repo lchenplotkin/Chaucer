@@ -1,5 +1,8 @@
 import re
 import string
+import csv
+import os
+import matplotlib.pyplot as plt
 
 # Toggle for vowel substitution normalization
 ALLOW_VOWEL_SUBSTITUTION = True
@@ -18,14 +21,16 @@ def standardize_rhyme_form(word, allow_vowel_substitution=True):
 
     if allow_vowel_substitution:
         word = re.sub(r'(ai|ay|ei|ey)$', 'ay', word)
-        word = re.sub(r'(au|aw)$', 'aw', word)
         word = re.sub(r'(ow|ough)$', 'ow', word)
         word = re.sub(r'(ough|uff)$', 'uff', word)
-        word = re.sub(r'(ance|aunce|aunse)$', 'ance', word)
         word = re.sub(r'(ys|is|es|ous)$', 'is', word)
         word = re.sub(r'([aeiou])w?r$', r'\1ur', word)
     
     return word
+
+# Function to strip consonants and return only vowels from a word
+def strip_to_vowels(text):
+    return ''.join([char for char in text if char in vowels])
 
 # Function to break a word into syllables
 def break_into_syllables(word):
@@ -46,48 +51,74 @@ def break_into_syllables(word):
     # Restore replaced placeholders
     syllables = [s.replace("_", "") for s in syllables]
 
+    # Fix syllabification for cases like 'insufficient'
+    # Ensure splits for complex words like 'cient', 'sufficient', etc.
+    syllables = [s.replace("ci", "ci_").replace("ient", "ie_nt") for s in syllables]
+    syllables = [s.replace("_", "") for s in syllables]
+
     return syllables
+
+# List of common Middle English feminine rhyme endings
+feminine_endings = [
+    "oun", "inge", "ynge", "ioun", "cioun", "able", "ible", "inesse", 
+    "itye", "ence", "aunce", "ance", "eede", "hede", "ine", "ous", "is", "ure", "oyed"
+]
+
+# Function to check if two words end with a common feminine ending
+def ends_in_common_feminine(word1, word2):
+    for ending in feminine_endings:
+        if word1.endswith(ending) and word2.endswith(ending):
+            return True
+    return False
 
 # Function to determine rhyme type: Masculine or Feminine
 def get_rhyme_type(word1, word2):
-    # Use standardized rhyme forms for comparison
     form1 = standardize_rhyme_form(word1, allow_vowel_substitution=ALLOW_VOWEL_SUBSTITUTION)
     form2 = standardize_rhyme_form(word2, allow_vowel_substitution=ALLOW_VOWEL_SUBSTITUTION)
 
     syllables1 = break_into_syllables(word1)
     syllables2 = break_into_syllables(word2)
-    print(syllables1,syllables2)
 
+    # Masculine if one of the words is monosyllabic
     if len(syllables1) == 1 or len(syllables2) == 1:
         return "M"
-    
-    last_syllable1 = syllables1[-1]
-    last_syllable2 = syllables2[-1]
 
-    
-    if last_syllable1 == last_syllable2:
-        # For feminine rhyme, there should be an additional matching syllable before the last one
-        if len(syllables1) > 1 and len(syllables2) > 1:
-            syllables1 = syllables1[:-1]
-            syllables2 = syllables2[:-1]
-            if last_syllable1 == "e" and last_syllable2 == "e" and len(syllables1) > 1 and len(syllables2) >1:
-                syllables1 = syllables1[:-1]
-                syllables2 = syllables2[:-1]
-            if syllables1[-1] == syllables2[-1]:
+    # Early exit if the words match a known feminine ending
+    if ends_in_common_feminine(word1.lower(), word2.lower()):
+        return "F"
+
+    last1 = syllables1[-1]
+    last2 = syllables2[-1]
+
+    # If the full last syllables match, check for feminine rhyme
+    if last1 == last2:
+        if last1 == 'e':
+            syllables1.pop(-1)
+            syllables2.pop(-1)
+        if len(syllables1) >= 2 and len(syllables2) >= 2:
+            penult1 = syllables1[-2]
+            penult2 = syllables2[-2]
+            if penult1 == penult2:
                 return "F"
-            elif last_syllable1!="e" and set(syllables1[-1]).intersection(set(vowels)) == set(syllables2[-1]).intersection(set(vowels)):
-                user = input(f"{word1},{word2},{syllables1},{syllables2}")
-                return user
             else:
-                return "M"
-        else:
-            return "M"
-    else:
-        user = input(f"{word1},{word2},{syllables1},{syllables2}")
-        return user
-    return "No Rhyme"
+                if strip_to_vowels(penult1) == strip_to_vowels(penult2):
+                    return "F"
+        return "M"
 
-    return "WHAT"
+    # If last syllables differ, try matching just vowels
+    elif strip_to_vowels(last1) == strip_to_vowels(last2):
+        if len(syllables1) >= 2 and len(syllables2) >= 2:
+            penult1 = syllables1[-2]
+            penult2 = syllables2[-2]
+            if strip_to_vowels(penult1) == strip_to_vowels(penult2):
+                return "F"
+        return "M"
+
+    # Not a clear match, fallback to manual check
+    else:
+        #user = input(f"{word1},{word2},{syllables1},{syllables2}")
+        return "E"
+
 # Function to extract the final words of each line in the text, removing punctuation
 lines = []
 lines_ammended = []
@@ -98,7 +129,6 @@ def get_final_words(text):
     for line in lines:
         og_line = line
         line = line.strip("-")
-        #line = line.strip("-")
         line = line.strip()
         if line:  # Only process non-empty lines
             lines_ammended.append(og_line)
@@ -108,42 +138,43 @@ def get_final_words(text):
             final_words.append(final_word)  # Add the cleaned word to the list
     return final_words
 
-# Example text (Middle English from The Canterbury Tales)
-filename = "pardoner.txt"
-with open(filename, "r") as file:
-    text = file.read()
+# Function to process files in a directory
+def process_directory(directory_path):
+    for filename in os.listdir(directory_path):
+        if filename.endswith(".txt"):
+            file_path = os.path.join(directory_path, filename)
+            with open(file_path, "r") as file:
+                text = file.read()
 
-# Extract final words from the text
-final_words = get_final_words(text)
+            # Extract final words from the text
+            final_words = get_final_words(text)
 
-# Check the rhyme type for each couplet (pair of lines)
-couplet_rhymes = []
-for i in range(0, len(final_words)-1, 2):
-    rhyme_type = get_rhyme_type(final_words[i], final_words[i+1])
-    couplet_rhymes.append((final_words[i], final_words[i+1], rhyme_type))
+            # Check the rhyme type for each couplet (pair of lines)
+            couplet_rhymes = []
+            for i in range(0, len(final_words)-1, 2):
+                rhyme_type = get_rhyme_type(final_words[i], final_words[i+1])
+                couplet_rhymes.append((i+1, final_words[i], final_words[i+1], rhyme_type))
 
-# Print the results for each couplet
-type_dict = {}
-i=1
-fem_num = 0
-masc_num = 0
-f = open('output.txt', 'w')
-#print('something', file = f)
-for word1, word2, rhyme in couplet_rhymes:
-    if rhyme == 'F':
-        print(f"Words: {word1} and {word2}, {i}")
-        print(lines_ammended[i-1:i+1])
-        print(f"Words: {word1} and {word2}, {i}", file = f)
-        print(lines_ammended[i-1:i+1], file = f)
-        fem_num+=1
-    if rhyme == "M":
-        masc_num+=1
-    type_dict[i] = rhyme
+            # Write the results to a CSV file
+            csv_filename = f"{filename.split('/')[-1].split('.')[0]}_rhymes.csv"
+            with open(csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
+                writer = csv.writer(csvfile)
+                writer.writerow(['Line Number', 'Word 1', 'Word 2', 'Rhyme Type'])
+                for line_num, word1, word2, rhyme in couplet_rhymes:
+                    writer.writerow([line_num, word1, word2, rhyme])
+
+            # Optional: Plot the feminine rhymes (if desired)
+            feminine_rhyme_lines = [line_num for line_num, word1, word2, rhyme in couplet_rhymes if rhyme == 'F']
+            plt.scatter(feminine_rhyme_lines, [1] * len(feminine_rhyme_lines), label=f"{filename} Feminine Rhymes")
     
-    i+=2
+    # Show the plot for all files
+    plt.xlabel('Line Number')
+    plt.ylabel('Feminine Rhymes (Constant)')
+    plt.title('Feminine Rhymes Across Files')
+    plt.legend()
+    plt.show()
 
-print(f"number of lines: {i-2}, number of masculine rhymes: {masc_num}, number of feminine rhymes: {fem_num}")
-print(f"number of lines: {i-2}, number of masculine rhymes: {masc_num}, number of feminine rhymes: {fem_num}", file = f)
+# Directory path containing the text files
+directory_path = "txt_tales"  # Replace with your directory path
+process_directory(directory_path)
 
-
-#print(type_dict)
