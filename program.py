@@ -111,6 +111,11 @@ def get_rhyme_type(word1, word2):
 
     # Not a clear match, return error
     else:
+        if len(syllables1) >= 2 and len(syllables2) >= 2:
+            penult1 = syllables1[-2]
+            penult2 = syllables2[-2]
+            if penult1 == penult2:
+                return "F"
         return "E"
 
 # Function to extract the final words of each line in the text, removing punctuation
